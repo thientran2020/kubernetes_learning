@@ -1,0 +1,26 @@
+apiVersion: crd.projectcalico.org/v1
+kind: NetworkPolicy
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"projectcalico.org/v3","kind":"NetworkPolicy","metadata":{"annotations":{},"name":"deny-all-ingress","namespace":"default"},"spec":{"ingress":[{"action":"Deny","destination":{"ports":[8080,80]},"protocol":"TCP","source":{"selector":"app == 'mongodb'"}}],"selector":"app == 'nginx'","types":["Ingress"]}}
+    projectcalico.org/metadata: '{"uid":"7978b006-d432-40f6-b062-311f4b940aa5","creationTimestamp":"2023-02-09T02:52:38Z","managedFields":[{"manager":"kubectl-client-side-apply","operation":"Update","apiVersion":"projectcalico.org/v3","time":"2023-02-09T02:52:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:kubectl.kubernetes.io/last-applied-configuration":{}}},"f:spec":{"f:ingress":{},"f:selector":{},"f:types":{}}}}]}'
+  creationTimestamp: "2023-02-09T02:52:38Z"
+  generation: 1
+  name: default.deny-all-ingress
+  namespace: default
+  resourceVersion: "2642"
+  uid: f14af472-6e3b-43b4-a515-52917e7f573f
+spec:
+  ingress:
+  - action: Deny
+    destination:
+      ports:
+      - 8080
+      - 80
+    protocol: TCP
+    source:
+      selector: app == 'mongodb'
+  selector: app == 'nginx'
+  types:
+  - Ingress
