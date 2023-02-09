@@ -1,3 +1,30 @@
+$ k -n kube-system get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+calico-kube-controllers-c44b4545-crjq6   1/1     Running   0          3h7m
+calico-node-2ddp2                        1/1     Running   0          3h7m
+coredns-6d4b75cb6d-5d6xb                 1/1     Running   0          3h7m
+etcd-minikube                            1/1     Running   0          3h8m
+kube-apiserver-minikube                  1/1     Running   0          3h8m
+kube-controller-manager-minikube         1/1     Running   0          3h8m
+kube-proxy-z2cgr                         1/1     Running   0          3h7m
+kube-scheduler-minikube                  1/1     Running   0          3h8m
+registry-proxy-mp6rj                     1/1     Running   0          3h7m
+registry-sk79z                           1/1     Running   0          3h7m
+storage-provisioner                      1/1     Running   0          3h8m
+NAME                                     READY   STATUS    RESTARTS   AGE
+calico-kube-controllers-c44b4545-crjq6   1/1     Running   0          3h7m
+calico-node-2ddp2                        1/1     Running   0          3h7m
+coredns-6d4b75cb6d-5d6xb                 1/1     Running   0          3h7m
+etcd-minikube                            1/1     Running   0          3h8m
+kube-apiserver-minikube                  1/1     Running   0          3h8m
+kube-controller-manager-minikube         1/1     Running   0          3h8m
+kube-proxy-z2cgr                         1/1     Running   0          3h7m
+kube-scheduler-minikube                  1/1     Running   0          3h8m
+registry-proxy-mp6rj                     1/1     Running   0          3h7m
+registry-sk79z                           1/1     Running   0          3h7m
+storage-provisioner                      1/1     Running   0          3h8m
+
+$ k api-resources
 NAME                              SHORTNAMES                                      APIVERSION                             NAMESPACED   KIND
 bindings                                                                          v1                                     true         Binding
 componentstatuses                 cs                                              v1                                     false        ComponentStatus
