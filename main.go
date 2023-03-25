@@ -5,8 +5,11 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
+	"path/filepath"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/tools/clientcmd"
 
 	v3 "github.com/projectcalico/api/pkg/apis/projectcalico/v3"
@@ -30,8 +33,8 @@ func main() {
 		panic(err)
 	}
 
-	tcp := numorstring.ProtocolFromString("TCP")
 	// Test create network-policies
+	tcp := numorstring.ProtocolFromString("TCP")
 	np := v3.NetworkPolicy{
 		TypeMeta: v1.TypeMeta{
 			Kind:       "NetworkPolicy",
@@ -65,6 +68,15 @@ func main() {
 		},
 	}
 	if createNetworkpolicies(cs, context.Background(), &np, "default") {
+		fmt.Println("Successfully created a test network policy...")
+	}
+
+	// Test parsing
+	newNP, err := testParsingCalicoYaml("./test_calico/test-network-policy.yaml")
+	if err != nil {
+		fmt.Printf("Error get network policy from yaml file: %v\n", err)
+	}
+	if createNetworkpolicies(cs, context.Background(), &newNP, "default") {
 		fmt.Println("Successfully created a test network policy...")
 	}
 
@@ -109,4 +121,23 @@ func createNetworkpolicies(cs *clientset.Clientset, ctx context.Context, np *v3.
 		return false
 	}
 	return true
+}
+
+func testParsingCalicoYaml(path string) (v3.NetworkPolicy, error) {
+	filename, _ := filepath.Abs(path)
+	yamlFile, err := ioutil.ReadFile(filename)
+	if err != nil {
+		fmt.Printf("Error reading yaml file: %v\n", err)
+		return *v3.NewNetworkPolicy(), err
+	}
+
+	var np v3.NetworkPolicy
+	err = yaml.Unmarshal(yamlFile, &np)
+	if err != nil {
+		fmt.Printf("Error parsing yaml file to v3.NetworkPolicy: %v\n", err)
+		return *v3.NewNetworkPolicy(), err
+	}
+
+	fmt.Println("Successfully parsed network policy...")
+	return np, nil
 }

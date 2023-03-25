@@ -1,0 +1,28 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: test-policy-from-yaml-file
+  namespace: default
+spec:
+  selector: app == 'nginx'
+  types:
+    - Ingress
+    - Egress
+  ingress:
+    - action: Deny
+      protocol: TCP 
+      source:
+        selector: app == 'red'
+      destination:
+        ports:
+          - 4040
+          - 4444
+  egress:
+    - action: Allow
+      protocol: TCP 
+      source:
+        selector: app == 'blue'
+      destination:
+        ports:
+          - 8888
+          - 8080
